@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz de Vôlei</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --azul-quadra: #0E2F44;
+  --azul-quadra-clara: #1B4B6B;
+  --branco: #FBF8F3;
+  --amarelo-bola: #F2B705;
+  --verde-ponto: #2E9E5B;
+  --vermelho-linha: #D64545;
+  --texto: #122436;
+  --texto-suave: #5B7185;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  font-family: 'Inter', system-ui, sans-serif;
+  background: linear-gradient(180deg, var(--azul-quadra-clara), var(--azul-quadra));
+  color: var(--texto);
+}
+
+.wrapper {
+  width: 100%;
+  max-width: 420px;
+}
+
+.topo {
+  text-align: center;
+  margin-bottom: 22px;
+  color: var(--branco);
+}
+
+.etiqueta {
+  display: inline-block;
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 0.15em;
+  font-size: 0.8rem;
+  color: var(--amarelo-bola);
+  border: 1px solid var(--amarelo-bola);
+  padding: 3px 12px;
+  border-radius: 999px;
+  margin-bottom: 12px;
+}
+
+.topo h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-weight: 400;
+  font-size: 2.1rem;
+  letter-spacing: 0.01em;
+  line-height: 1.15;
+}
+
+.card {
+  background: var(--branco);
+  border-radius: 14px;
+  padding: 28px 24px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+}
+
+.sets {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 18px;
+}
+
+.sets span {
+  flex: 1;
+  height: 8px;
+  border-radius: 3px;
+  background: #E4E9ED;
+  transition: background 0.25s ease;
+}
+
+.sets span.atual {
+  background: var(--amarelo-bola);
+}
+
+.sets span.acertou {
+  background: var(--verde-ponto);
+}
+
+.sets span.errou {
+  background: var(--vermelho-linha);
+}
+
+.contador {
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--texto-suave);
+  font-size: 0.8rem;
+  margin-bottom: 8px;
+}
+
+#pergunta {
+  font-size: 1.2rem;
+  line-height: 1.4;
+  margin-bottom: 20px;
+}
+
+.opcoes {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.opcao-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  text-align: left;
+  padding: 13px 15px;
+  border: 2px solid #E4E9ED;
+  background: #FAFBFC;
+  border-radius: 10px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.98rem;
+  color: var(--texto);
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.opcao-btn .letra {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1rem;
+  color: var(--texto-suave);
+  width: 18px;
+  flex-shrink: 0;
+}
+
+.opcao-btn:hover:not(:disabled) {
+  border-color: var(--azul-quadra-clara);
+  background: #F1F6FA;
+}
+
+.opcao-btn:focus-visible {
+  outline: 3px solid var(--azul-quadra-clara);
+  outline-offset: 2px;
+}
+
+.opcao-btn:disabled {
+  cursor: default;
+}
+
+.opcao-btn.correta {
+  border-color: var(--verde-ponto);
+  background: #E8F7EE;
+  color: #1E7A45;
+}
+
+.opcao-btn.correta .letra {
+  color: #1E7A45;
+}
+
+.opcao-btn.errada {
+  border-color: var(--vermelho-linha);
+  background: #FBEAEA;
+  color: #A93232;
+}
+
+.opcao-btn.errada .letra {
+  color: #A93232;
+}
+
+#resultado-box {
+  text-align: center;
+}
+
+.rotulo {
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  color: var(--texto-suave);
+}
+
+.placar {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 3.4rem;
+  color: var(--azul-quadra-clara);
+  line-height: 1.1;
+  margin: 6px 0 8px;
+}
+
+.mensagem {
+  color: var(--texto-suave);
+  margin-bottom: 22px;
+}
+
+#btn-reiniciar {
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 0.05em;
+  font-size: 1.1rem;
+  padding: 12px 32px;
+  border: none;
+  border-radius: 10px;
+  background: var(--amarelo-bola);
+  color: var(--texto);
+  cursor: pointer;
+  transition: filter 0.15s ease;
+}
+
+#btn-reiniciar:hover {
+  filter: brightness(1.08);
+}
+
+#btn-reiniciar:focus-visible {
+  outline: 3px solid var(--branco);
+  outline-offset: 3px;
+}
+
+.escondido {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}
+
+@media (max-width: 360px) {
+  .topo h1 {
+    font-size: 1.7rem;
+  }
+  .placar {
+    font-size: 2.8rem;
+  }
+}
+</style>
+</head>
+<body>
+  <div class="wrapper">
+    <header class="topo">
+      <span class="etiqueta">Quiz</span>
+      <h1>Você manda bem no vôlei?</h1>
+    </header>
+
+    <main>
+      <div class="card" id="quiz-box">
+        <div class="sets" id="sets"></div>
+        <p class="contador" id="contador"></p>
+        <h2 id="pergunta"></h2>
+        <div class="opcoes" id="opcoes"></div>
+      </div>
+
+      <div class="card escondido" id="resultado-box">
+        <p class="rotulo">Placar final</p>
+        <p class="placar" id="pontuacao"></p>
+        <p class="mensagem" id="mensagem"></p>
+        <button id="btn-reiniciar">Jogar de novo</button>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const perguntas = [
+      {
+        pergunta: "Quantos toques são permitidos no vôlei?",
+        opcoes: ["4", "2", "3", "Apenas 1"],
+        resposta: 2
+      },
+      {
+        pergunta: "Quantas pessoas são necessárias para montar um time?",
+        opcoes: ["2", "4", "5", "6"],
+        resposta: 3
+      },
+      {
+        pergunta: "Quantas pessoas são necessárias para jogar uma partida de vôlei?",
+        opcoes: ["4", "12", "8", "10"],
+        resposta: 1
+      },
+      {
+        pergunta: "Quanto tempo um jogador tem para sacar após o árbitro apitar?",
+        opcoes: ["8", "6", "5", "O tempo que quiser"],
+        resposta: 0
+      },
+      {
+        pergunta: "Existem cartões no vôlei?",
+        opcoes: ["Sim", "Não"],
+        resposta: 0
+      }
+    ];
+
+    const LETRAS = ["A", "B", "C", "D"];
+
+    let indiceAtual = 0;
+    let pontuacao = 0;
+    const respostasDadas = [];
+
+    const perguntaEl = document.getElementById('pergunta');
+    const opcoesEl = document.getElementById('opcoes');
+    const contadorEl = document.getElementById('contador');
+    const setsEl = document.getElementById('sets');
+    const quizBox = document.getElementById('quiz-box');
+    const resultadoBox = document.getElementById('resultado-box');
+    const pontuacaoEl = document.getElementById('pontuacao');
+    const mensagemEl = document.getElementById('mensagem');
+    const btnReiniciar = document.getElementById('btn-reiniciar');
+
+    function criarSets() {
+      setsEl.innerHTML = '';
+      perguntas.forEach(() => {
+        setsEl.appendChild(document.createElement('span'));
+      });
+    }
+
+    function atualizarSets() {
+      const marcadores = setsEl.children;
+      for (let i = 0; i < marcadores.length; i++) {
+        marcadores[i].className = '';
+        if (respostasDadas[i] === true) {
+          marcadores[i].classList.add('acertou');
+        } else if (respostasDadas[i] === false) {
+          marcadores[i].classList.add('errou');
+        } else if (i === indiceAtual) {
+          marcadores[i].classList.add('atual');
+        }
+      }
+    }
+
+    function carregarPergunta() {
+      const atual = perguntas[indiceAtual];
+      contadorEl.textContent = `Pergunta ${indiceAtual + 1} de ${perguntas.length}`;
+      perguntaEl.textContent = atual.pergunta;
+      opcoesEl.innerHTML = '';
+
+      atual.opcoes.forEach((opcao, index) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'opcao-btn';
+        btn.innerHTML = `<span class="letra">${LETRAS[index]}</span><span>${opcao}</span>`;
+        btn.addEventListener('click', () => selecionarResposta(index));
+        opcoesEl.appendChild(btn);
+      });
+
+      atualizarSets();
+    }
+
+    function selecionarResposta(indiceEscolhido) {
+      const atual = perguntas[indiceAtual];
+      const botoes = document.querySelectorAll('.opcao-btn');
+      const acertou = indiceEscolhido === atual.resposta;
+
+      botoes.forEach(btn => btn.disabled = true);
+
+      if (acertou) {
+        botoes[indiceEscolhido].classList.add('correta');
+        pontuacao++;
+      } else {
+        botoes[indiceEscolhido].classList.add('errada');
+        botoes[atual.resposta].classList.add('correta');
+      }
+
+      respostasDadas[indiceAtual] = acertou;
+      atualizarSets();
+
+      setTimeout(() => {
+        indiceAtual++;
+        if (indiceAtual < perguntas.length) {
+          carregarPergunta();
+        } else {
+          mostrarResultado();
+        }
+      }, 1100);
+    }
+
+    function mostrarResultado() {
+      quizBox.classList.add('escondido');
+      resultadoBox.classList.remove('escondido');
+      pontuacaoEl.textContent = `${pontuacao} / ${perguntas.length}`;
+
+      if (pontuacao === perguntas.length) {
+        mensagemEl.textContent = "Perfeito! Você manda bem nas regras do vôlei.";
+      } else if (pontuacao >= Math.ceil(perguntas.length / 2)) {
+        mensagemEl.textContent = "Mandou bem! Só afiar um pouco mais.";
+      } else {
+        mensagemEl.textContent = "Vale a pena rever as regras do jogo!";
+      }
+    }
+
+    btnReiniciar.addEventListener('click', () => {
+      indiceAtual = 0;
+      pontuacao = 0;
+      respostasDadas.length = 0;
+      resultadoBox.classList.add('escondido');
+      quizBox.classList.remove('escondido');
+      carregarPergunta();
+    });
+
+    criarSets();
+    carregarPergunta();
+  </script>
+</body>
+</html>

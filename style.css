@@ -1,0 +1,239 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --azul-quadra: #0E2F44;
+  --azul-quadra-clara: #1B4B6B;
+  --branco: #FBF8F3;
+  --amarelo-bola: #F2B705;
+  --verde-ponto: #2E9E5B;
+  --vermelho-linha: #D64545;
+  --texto: #122436;
+  --texto-suave: #5B7185;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  font-family: 'Inter', system-ui, sans-serif;
+  background: linear-gradient(180deg, var(--azul-quadra-clara), var(--azul-quadra));
+  color: var(--texto);
+}
+
+.wrapper {
+  width: 100%;
+  max-width: 420px;
+}
+
+.topo {
+  text-align: center;
+  margin-bottom: 22px;
+  color: var(--branco);
+}
+
+.etiqueta {
+  display: inline-block;
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 0.15em;
+  font-size: 0.8rem;
+  color: var(--amarelo-bola);
+  border: 1px solid var(--amarelo-bola);
+  padding: 3px 12px;
+  border-radius: 999px;
+  margin-bottom: 12px;
+}
+
+.topo h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-weight: 400;
+  font-size: 2.1rem;
+  letter-spacing: 0.01em;
+  line-height: 1.15;
+}
+
+.card {
+  background: var(--branco);
+  border-radius: 14px;
+  padding: 28px 24px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+}
+
+.sets {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 18px;
+}
+
+.sets span {
+  flex: 1;
+  height: 8px;
+  border-radius: 3px;
+  background: #E4E9ED;
+  transition: background 0.25s ease;
+}
+
+.sets span.atual {
+  background: var(--amarelo-bola);
+}
+
+.sets span.acertou {
+  background: var(--verde-ponto);
+}
+
+.sets span.errou {
+  background: var(--vermelho-linha);
+}
+
+.contador {
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--texto-suave);
+  font-size: 0.8rem;
+  margin-bottom: 8px;
+}
+
+#pergunta {
+  font-size: 1.2rem;
+  line-height: 1.4;
+  margin-bottom: 20px;
+}
+
+.opcoes {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.opcao-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  text-align: left;
+  padding: 13px 15px;
+  border: 2px solid #E4E9ED;
+  background: #FAFBFC;
+  border-radius: 10px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.98rem;
+  color: var(--texto);
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.opcao-btn .letra {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1rem;
+  color: var(--texto-suave);
+  width: 18px;
+  flex-shrink: 0;
+}
+
+.opcao-btn:hover:not(:disabled) {
+  border-color: var(--azul-quadra-clara);
+  background: #F1F6FA;
+}
+
+.opcao-btn:focus-visible {
+  outline: 3px solid var(--azul-quadra-clara);
+  outline-offset: 2px;
+}
+
+.opcao-btn:disabled {
+  cursor: default;
+}
+
+.opcao-btn.correta {
+  border-color: var(--verde-ponto);
+  background: #E8F7EE;
+  color: #1E7A45;
+}
+
+.opcao-btn.correta .letra {
+  color: #1E7A45;
+}
+
+.opcao-btn.errada {
+  border-color: var(--vermelho-linha);
+  background: #FBEAEA;
+  color: #A93232;
+}
+
+.opcao-btn.errada .letra {
+  color: #A93232;
+}
+
+#resultado-box {
+  text-align: center;
+}
+
+.rotulo {
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  color: var(--texto-suave);
+}
+
+.placar {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 3.4rem;
+  color: var(--azul-quadra-clara);
+  line-height: 1.1;
+  margin: 6px 0 8px;
+}
+
+.mensagem {
+  color: var(--texto-suave);
+  margin-bottom: 22px;
+}
+
+#btn-reiniciar {
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 0.05em;
+  font-size: 1.1rem;
+  padding: 12px 32px;
+  border: none;
+  border-radius: 10px;
+  background: var(--amarelo-bola);
+  color: var(--texto);
+  cursor: pointer;
+  transition: filter 0.15s ease;
+}
+
+#btn-reiniciar:hover {
+  filter: brightness(1.08);
+}
+
+#btn-reiniciar:focus-visible {
+  outline: 3px solid var(--branco);
+  outline-offset: 3px;
+}
+
+.escondido {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}
+
+@media (max-width: 360px) {
+  .topo h1 {
+    font-size: 1.7rem;
+  }
+  .placar {
+    font-size: 2.8rem;
+  }
+}
